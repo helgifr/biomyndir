@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
+import { Route, Switch, withRouter } from 'react-router-dom'
+
 import logo from './logo.svg';
+import Button from './components/button';
+import Movie from './components/movie';
+
+import NotFound from './routes/not-found';
+import Home from './routes/home';
+import MoviePage from './routes/moviePage';
+
 import './App.css';
 
 class App extends Component {
+
   render() {
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <main className="main__content">
+        <Helmet defaultTitle="Bíómyndir landsins" titleTemplate="%s" />
+        <Switch location={this.props.location}>
+          <Route path="/" exact component={Home} />
+          <Route path="/movie/:id" exact component={MoviePage} />
+          {/* todo fleiri route */}
+          <Route component={NotFound} />
+        </Switch>
+      </main>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    movies: state.movies.movies,
+    isFetching: state.movies.isFetching,
+  }
+}
+export default withRouter(connect(mapStateToProps)(App));

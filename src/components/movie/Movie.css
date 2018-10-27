@@ -1,0 +1,44 @@
+.movieSpace {
+  max-width: 200px;
+  max-height: 600px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #333;
+  background-color: beige;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.movieSpace > a {
+  height: 100%;
+}
+
+.movieSpace p {
+  color: black;
+}
+
+.movieSpace:hover {
+  box-shadow: 0 0 40px #333;
+  transform: scale(1.1, 1.1);
+}
+
+.movieSpace > a > img {
+  max-width: 100%;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row;
+}
+
+.rating > p {
+  margin: auto 0 auto auto;
+}
+
+.logo {
+  max-width: 90px;
+  max-height: 75px;
+  margin: auto auto auto 0;
+}
