@@ -1,32 +1,19 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function getMovies() {
-  let token = JSON.parse(window.localStorage.getItem('token')) || undefined;
-  if (token) {
-    const { timestamp } = token;
-    const now = new Date().getTime();
-    
-    if (token === undefined || !token.value || now > timestamp) {
-      token = await getToken();
-    } else {
-      token = token.value;
-    }
-
-  } else {
-    token = await getToken();
-  }
 
   const options = {
     headers: {
-      'x-access-token': token,
-      'Content-Type': 'application/json',
+      authorization: 'Bearer Kappa',
     },
     method: 'GET',
   };
 
-  const url = `${baseurl}/movies`;
+  const url = `${baseurl}`;
 
   const response = await fetch(url, options);
+  console.log(response);
+  
 
   const result = await response.json();
 
