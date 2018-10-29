@@ -1,13 +1,52 @@
-.cinemas {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 20px;
-  background-color: khaki;
+.movie-page {
+  max-width: 1200px;
+  margin: auto;
 }
 
-.movies {
+.movie-about {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+
+}
+@media (max-width: 599px) {
+  .movie-about {
+    flex-direction: column;
+  }
+}
+
+.movie-about > img {
+  width: 300px;
+  height: 450px;
+  margin-left: 20px;
+}
+
+.movie-info {
+  margin-left: 20px;
+}
+
+.movie-page-rating {
+  display: flex;
+  flex-direction: row;
+}
+.movie-page-rating > p {
+  margin: auto 0;
+}
+
+.showtimes {
+  margin: 20px auto;
+}
+
+.theater-showtimes {
+  margin: auto 20px;
+}
+
+.schedules {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+iframe {
+  margin-left: 20px;
 }

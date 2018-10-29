@@ -28,26 +28,35 @@ class Home extends Component {
       { name: "Sambíóin, Keflavík", pushed: false },
       { name: "Smárabíó", pushed: false },
     ],
+    sortMovies: false,
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(getMovies());
+    const cinemas = JSON.parse(window.localStorage.getItem('cinemas'));
+    if (cinemas) {
+      console.log('asdfas');
+      this.setState({ cinemas, sortMovies: true });
+    }
+    await dispatch(getMovies());
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { isFetching, movies } = this.props;
-    const { done } = this.state;
+    const { done, sortMovies, cinemas } = this.state;
 
     if (!isFetching && !done) {
       if (movies) {
+        console.log(movies);
         this.setState({ allMovies: movies, movies, done: true });
       } else {
         console.log('damn dude', movies);
       }
-    } else {
+    } else if (isFetching) {
       console.log('we fetching, boi');
+    } else if (sortMovies) {
+      this.sortMovies(cinemas);
     }
   }
 
@@ -75,17 +84,25 @@ class Home extends Component {
         newMovieList.push(movie);
       }
     });
-    this.setState({ movies: newMovieList, cinemas });
+    window.localStorage.setItem('cinemas', JSON.stringify(cinemas));
+    console.log('sort');
+    
+    this.setState({ movies: newMovieList, cinemas, sortMovies: false });
   }
 
   render() {
     const { message, isFetching } = this.props;
     const { cinemas, movies } = this.state;
+    console.log(`1 isFetching: ${isFetching}\nmovies: ${movies}`);
     if (isFetching) return (<p>sæki myndir...</p>);
+
+    console.log(`isFetching: ${isFetching}\nmovies: ${movies}`);
+
 
     return (
       <div>
         <div className="cinemas">
+          <h3>Bíóhús</h3>
           {cinemas.map((cinema, index) => {
             return(
               <Button key={index} pushed={cinema.pushed} onClick={() => this.cinemaButton(index)}>{cinema.name}</Button>
@@ -93,14 +110,16 @@ class Home extends Component {
           })}
         </div>
         <div className="movies">
-          {movies.map((movie) => {
-            return (
-              <Movie
-                key={movie.id}
-                movie={movie}
-              />
-            )
-          })}
+          {movies && 
+            movies.map((movie) => {
+              return (
+                <Movie
+                  key={movie.id}
+                  movie={movie}
+                />
+              )
+            })
+          }
         </div>
       </div>
     );

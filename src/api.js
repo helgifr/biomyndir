@@ -39,7 +39,8 @@ async function getMovie(id) {
   if (token) {
     const { timestamp } = token;
     const now = new Date().getTime();
-
+    console.log(now, timestamp);
+    
     if (token === undefined || !token.value || now > timestamp) {
       token = await getToken();
     } else {

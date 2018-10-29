@@ -1,5 +1,6 @@
 .movieSpace {
-  max-width: 200px;
+  max-width: 220px;
+  min-width: 180px;
   max-height: 600px;
   border-radius: 4px;
   box-shadow: 0 0 10px #333;
@@ -8,6 +9,7 @@
   flex-direction: column;
   text-align: center;
   overflow: hidden;
+  flex: 2 1;
   transition: 0.3s;
 }
 

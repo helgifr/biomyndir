@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import { getMovies } from '../../actions/movies';
 
@@ -44,22 +45,72 @@ class MoviePage extends Component {
       ratings,
       ids,
       plot,
+      showtimes,
+      directors_abridged,
+      trailers,
     } = movie[0];
     const { imdb } = ratings;
+    const { results } = trailers[0];
+    let trailerPlaylist = "";
+    results.forEach(result => trailerPlaylist += "," + result.key);
     console.log(movie[0]);
-    
+    let directors = `Leikstjóri: ${directors_abridged[0].name}`;
+    if (directors_abridged.length > 1) {
+      directors = 'Leikstjórar: ' + directors_abridged[0].name;
+      for (let i = 1; i < directors_abridged.length; i++) {
+        if (i === directors_abridged.length-1) {
+          directors += ` og ${directors_abridged[i].name}`;
+        } else {
+          directors += `, ${directors_abridged[i].name}`;
+        }
+      }
+    }
 
     return (
       <div className="movie-page">
-        <img src={poster} alt={"mynd fyrir bíómyndina " + title} />
-        <p>{title}</p>
-        <div className="rating">
-            <p>{imdb}</p>
-            <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
-              <img className="logo" src="/imdb.png" alt="imdb logo" />
-            </a>
+        <Helmet title={title} />
+        <div className="movie-about">
+          <img src={poster} alt={"mynd fyrir bíómyndina " + title} />
+          <div className="movie-info">
+            <h1 className="movie-title">{title}</h1>
+            <div className="movie-page-rating">
+                <p>{imdb}</p>
+                <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
+                  <img className="logo" src="/imdb.png" alt="imdb logo" />
+                </a>
+              </div>
+            <p>{directors}</p>
+            <p className="plot-text">{plot}</p>
           </div>
-        <p>{plot}</p>
+        </div>
+        {results.length > 0 &&
+        <iframe title="trailers" align="center" width="560" height="315" src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+        }
+        <div className="showtimes">
+          {movie &&
+            showtimes.map(theater => {
+              const { name, id } = theater.cinema;
+              const { schedule } = theater;
+              return (
+                <section key={id} className="theater-showtimes">
+                  <h1>{name}</h1>
+                  <div className="schedules">
+                    {schedule.map((schedule, index) => {
+                      return (
+                        <a key={`${id}${index}`}href={schedule.purchase_url}>
+                          <Button className="schedule">
+                            <p>{schedule.time}</p>
+                          </Button>
+                        </a>
+                      )
+                    })
+                    }
+                  </div>
+                </section>
+              )
+            })
+          }
+        </div>
       </div>
     );
   }

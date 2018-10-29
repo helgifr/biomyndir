@@ -4,12 +4,14 @@ import Helmet from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom'
 
 import logo from './logo.svg';
-import Button from './components/button';
-import Movie from './components/movie';
+
+import Header from './components/header';
 
 import NotFound from './routes/not-found';
 import Home from './routes/home';
 import MoviePage from './routes/moviePage';
+
+
 
 import './App.css';
 
@@ -18,14 +20,17 @@ class App extends Component {
   render() {
 
     return (
-      <main className="main__content">
+      <main className="main">
         <Helmet defaultTitle="Bíómyndir landsins" titleTemplate="%s" />
-        <Switch location={this.props.location}>
-          <Route path="/" exact component={Home} />
-          <Route path="/movie/:id" exact component={MoviePage} />
-          {/* todo fleiri route */}
-          <Route component={NotFound} />
-        </Switch>
+        <Header />
+        <div className="main__content">
+          <Switch location={this.props.location}>
+            <Route path="/" exact component={Home} />
+            <Route path="/movie/:id" exact component={MoviePage} />
+            {/* todo fleiri route */}
+            <Route component={NotFound} />
+          </Switch>
+        </div>
       </main>
     );
   }
