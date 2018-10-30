@@ -26,7 +26,7 @@ class App extends Component {
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
-            <Route path="/movie/:id" exact component={MoviePage} />
+            <Route path="/movie/:id" component={MoviePage} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>
