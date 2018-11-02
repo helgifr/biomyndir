@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { getMovies } from '../../actions/movies';
 
-import logo from '../../logo.svg';
 import Button from '../../components/button';
 import Movie from '../../components/movie';
 

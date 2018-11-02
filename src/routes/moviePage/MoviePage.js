@@ -84,7 +84,11 @@ class MoviePage extends Component {
           </div>
         </div>
         {results.length > 0 &&
-        <iframe title="trailers" align="center" width="560" height="315" src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          <div className="youtubevideowrap">
+            <div className="video-container">
+              <iframe title="trailers" width="640" height="352" align="center" src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            </div>
+          </div>
         }
         <div className="showtimes">
           {movie &&
