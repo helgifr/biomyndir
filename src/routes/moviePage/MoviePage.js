@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import { getMovies } from '../../actions/movies';
 
 import Button from '../../components/button';
+import Loading from '../../components/loading';
 
 import './MoviePage.css';
 
@@ -32,7 +33,7 @@ class MoviePage extends Component {
   render() {
     const { message, isFetching, movies } = this.props;
 
-    if (isFetching) return (<p>sæki mynd...</p>);
+    if (isFetching) return (<Loading />);
 
     const { match } = this.props;
     const { id } = match.params;

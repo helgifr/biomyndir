@@ -6,6 +6,7 @@ import { getMovies } from '../../actions/movies';
 
 import Button from '../../components/button';
 import Movie from '../../components/movie';
+import Loading from '../../components/loading';
 
 import './Home.css';
 
@@ -92,11 +93,8 @@ class Home extends Component {
   render() {
     const { message, isFetching } = this.props;
     const { cinemas, movies } = this.state;
-    console.log(`1 isFetching: ${isFetching}\nmovies: ${movies}`);
-    if (isFetching) return (<p>sæki myndir...</p>);
 
-    console.log(`isFetching: ${isFetching}\nmovies: ${movies}`);
-
+    if (isFetching) return (<Loading />);
 
     return (
       <div>

@@ -31,6 +31,10 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </div>
+        <hr />
+        <footer className="footer">
+          <p>&copy; {new Date().getFullYear()} - Bíómyndir landsins</p>
+        </footer>
       </main>
     );
   }
