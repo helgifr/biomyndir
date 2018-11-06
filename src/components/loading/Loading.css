@@ -13,8 +13,8 @@
   width: 35px;
   height: 15px;
   border-radius: 8px;
-  background: #FF2CBD;
-  box-shadow: 0 0 10px 0 #FECDFF;
+  background: rgb(179, 161, 161);
+  box-shadow: 0 0 10px 0 rgb(226, 204, 226);
 }
 
 .uno {

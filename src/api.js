@@ -12,8 +12,6 @@ async function getMovies() {
   const url = `${baseurl}`;
 
   const response = await fetch(url, options);
-  console.log(response);
-  
 
   const result = await response.json();
 

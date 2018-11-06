@@ -35,6 +35,8 @@ class MoviePage extends Component {
 
     if (isFetching) return (<Loading />);
 
+    if (message) return (<p>{message}</p>);
+
     const { match } = this.props;
     const { id } = match.params;
 
@@ -50,11 +52,13 @@ class MoviePage extends Component {
       directors_abridged,
       trailers,
     } = movie[0];
+
     const { imdb } = ratings;
     const { results } = trailers[0];
+
     let trailerPlaylist = "";
     results.forEach(result => trailerPlaylist += "," + result.key);
-    console.log(movie[0]);
+
     let directors = `Leikstjóri: ${directors_abridged[0].name}`;
     if (directors_abridged.length > 1) {
       directors = 'Leikstjórar: ' + directors_abridged[0].name;

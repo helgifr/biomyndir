@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom'
 
-import logo from './logo.svg';
-
 import Header from './components/header';
 
 import NotFound from './routes/not-found';
 import Home from './routes/home';
 import MoviePage from './routes/moviePage';
-
-
 
 import './App.css';
 

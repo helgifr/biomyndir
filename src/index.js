@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import rootReducer from './reducers';
-import ScrollToTop from './ScrollToTop';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(

@@ -36,25 +36,23 @@ class Home extends Component {
     const { dispatch } = this.props;
     const cinemas = JSON.parse(window.localStorage.getItem('cinemas'));
     if (cinemas) {
-      console.log('asdfas');
       this.setState({ cinemas, sortMovies: true });
     }
     await dispatch(getMovies());
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isFetching, movies } = this.props;
+    const { isFetching, movies, message } = this.props;
     const { done, sortMovies, cinemas } = this.state;
 
     if (!isFetching && !done) {
       if (movies) {
-        console.log(movies);
         this.setState({ allMovies: movies, movies, done: true });
       } else {
-        console.log('damn dude', movies);
+        console.warn(message);
       }
     } else if (isFetching) {
-      console.log('we fetching, boi');
+      console.info('Fetching movies');
     } else if (sortMovies) {
       this.sortMovies(cinemas);
     }
@@ -85,8 +83,7 @@ class Home extends Component {
       }
     });
     window.localStorage.setItem('cinemas', JSON.stringify(cinemas));
-    console.log('sort');
-    
+
     this.setState({ movies: newMovieList, cinemas, sortMovies: false });
   }
 
@@ -95,6 +92,8 @@ class Home extends Component {
     const { cinemas, movies } = this.state;
 
     if (isFetching) return (<Loading />);
+
+    if (message) return (<p>{message}</p>);
 
     return (
       <div>
