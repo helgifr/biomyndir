@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/biomyndir/static/css/main.2bb671c5.chunk.css"
   },
   {
-    "revision": "cee7a7dc1a4fae717b2248663c7a1c73",
+    "revision": "b35f6b2ac51c633f60a312f8ab7a9369",
     "url": "/biomyndir/index.html"
   }
 ];
