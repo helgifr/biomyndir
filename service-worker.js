@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/biomyndir/precache-manifest.bd6db26c4c130a03587edd82d4bc0a1a.js"
+  "/biomyndir/precache-manifest.e36541c66a3513145578c075d5256a2b.js"
 );
 
 workbox.clientsClaim();
