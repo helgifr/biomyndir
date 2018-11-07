@@ -10,8 +10,10 @@ import Loading from '../../components/loading';
 
 import './MoviePage.css';
 
-class MoviePage extends Component {
+const basename = process.env.PUBLIC_URL || '';
 
+class MoviePage extends Component {
+  
   componentDidMount() {
     const movies = window.localStorage.getItem("movies");
     if (!movies || movies.timestamp < new Date().getTime()) {
@@ -81,7 +83,7 @@ class MoviePage extends Component {
             <div className="movie-page-rating">
                 <p>{imdb}</p>
                 <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
-                  <img className="logo" src="/imdb.png" alt="imdb logo" />
+                  <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />
                 </a>
               </div>
             <p>{directors}</p>

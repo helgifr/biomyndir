@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Movie.css';
 
-/* todo aðrar útgáfur af takka fyrir disabled, minni takka fyrir logout og "warning" takka */
+const basename = process.env.PUBLIC_URL || '';
 
 export default class Movie extends Component {
 
@@ -18,7 +18,7 @@ export default class Movie extends Component {
           <p>{title}</p>
           <div className="rating">
             <p>{ratings.imdb}</p>
-            <img className="logo" src="/imdb.png" alt="imdb logo" />
+            <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />
           </div>
         </Link>
       </figure>
