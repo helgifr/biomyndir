@@ -1,3 +1,5 @@
+import { setStoredMovies } from './storedMovies';
+
 const baseurl = process.env.REACT_APP_SERVICE_URL || "https://bio-server.herokuapp.com";
 
 async function getMovies() {
@@ -14,6 +16,10 @@ async function getMovies() {
   const response = await fetch(url, options);
 
   const result = await response.json();
+
+  if (response.status === 200) {
+    setStoredMovies(result);
+  }
 
   return { result, status: response.status };
 }

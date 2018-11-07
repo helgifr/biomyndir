@@ -5,7 +5,7 @@ import {
 } from '../actions/movies';
 
 const initialState = {
-  isFetching: true,
+  isFetching: false,
   movies: null,
 };
 

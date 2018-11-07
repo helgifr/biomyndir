@@ -8,6 +8,8 @@ import Button from '../../components/button';
 import Movie from '../../components/movie';
 import Loading from '../../components/loading';
 
+import { getStoredMovies } from '../../storedMovies';
+
 import './Home.css';
 
 class Home extends Component {
@@ -38,7 +40,13 @@ class Home extends Component {
     if (cinemas) {
       this.setState({ cinemas, sortMovies: true });
     }
-    await dispatch(getMovies());
+    const movies = await getStoredMovies();
+    if (movies) {
+      this.setState({ allMovies: movies, movies, done: true });
+    }
+    else {
+      await dispatch(getMovies());
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,7 +56,7 @@ class Home extends Component {
     if (!isFetching && !done) {
       if (movies) {
         this.setState({ allMovies: movies, movies, done: true });
-      } else {
+      } else if (message) {
         console.warn(message);
       }
     } else if (isFetching) {

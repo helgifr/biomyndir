@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import { getMovies } from '../../actions/movies';
+import { getStoredMovies } from '../../storedMovies';
 
 import Button from '../../components/button';
 import Loading from '../../components/loading';
@@ -13,17 +14,38 @@ import './MoviePage.css';
 const basename = process.env.PUBLIC_URL || '';
 
 class MoviePage extends Component {
-  
-  componentDidMount() {
-    const movies = window.localStorage.getItem("movies");
-    if (!movies || movies.timestamp < new Date().getTime()) {
+
+  state = {
+    movies: null,
+    done: false,
+  }
+
+  async componentDidMount() {
+    const movies = await getStoredMovies();
+    if (movies) {
+      this.setState({ movies, done: true });
+    }
+    else {
       const { dispatch } = this.props;
-      dispatch(getMovies());
+      await dispatch(getMovies());
     }
   }
 
   componentDidUpdate() {
+    const { isFetching, movies, message } = this.props;
+    const { done, sortMovies, cinemas } = this.state;
 
+    if (!isFetching && !done) {
+      if (movies) {
+        this.setState({ movies, done: true });
+      } else {
+        console.warn(message);
+      }
+    } else if (isFetching) {
+      console.info('Fetching movies');
+    } else if (sortMovies) {
+      this.sortMovies(cinemas);
+    }
   }
 
   cinemaButton(index) {
@@ -33,11 +55,13 @@ class MoviePage extends Component {
   }
 
   render() {
-    const { message, isFetching, movies } = this.props;
-
-    if (isFetching) return (<Loading />);
+    const { message, isFetching } = this.props;
+    const { movies } = this.state;
 
     if (message) return (<p>{message}</p>);
+
+    if (isFetching || !movies) return (<Loading />);
+
 
     const { match } = this.props;
     const { id } = match.params;
