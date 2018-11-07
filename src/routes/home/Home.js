@@ -92,7 +92,8 @@ class Home extends Component {
     const { cinemas, movies } = this.state;
 
     if (isFetching) return (<Loading />);
-
+    console.log(message);
+    
     if (message) return (<p>{message}</p>);
 
     return (
