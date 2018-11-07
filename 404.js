@@ -4,6 +4,8 @@ const nonHomeUrls = ['/snap-ninja', '/Headcount', '/comp-3', '/Centipede'];
 for (let i = 0; i < nonHomeUrls.length; i++) {
   const urlRegex = new RegExp(nonHomeUrls[i], 'i');
   const verifyUrl = urlRegex.test(l.pathname);
+  console.log('oh boy');
+  
   if (!verifyUrl) {
     l.replace(
       l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
