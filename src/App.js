@@ -31,7 +31,10 @@ class App extends Component {
           <hr />
           <p>&copy; {new Date().getFullYear()} - Bíómyndir landsins</p>
         </footer>
-        <CookieConsent buttonText="Allt í góðu">
+        <CookieConsent
+          buttonText="Allt í góðu"
+          buttonStyle={{ cursor: "pointer" }}
+          >
           Þessi síða notar kökur til að bæta notendaupplifunina.
         </CookieConsent>
       </main>
