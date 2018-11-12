@@ -33,7 +33,7 @@ class MoviePage extends Component {
 
   componentDidUpdate() {
     const { isFetching, movies, message } = this.props;
-    const { done, sortMovies, cinemas } = this.state;
+    const { done } = this.state;
 
     if (!isFetching && !done) {
       if (movies) {
@@ -43,15 +43,7 @@ class MoviePage extends Component {
       }
     } else if (isFetching) {
       console.info('Fetching movies');
-    } else if (sortMovies) {
-      this.sortMovies(cinemas);
     }
-  }
-
-  cinemaButton(index) {
-    const { cinemas } = this.state;
-    cinemas[index].pushed = !cinemas[index].pushed;
-    this.sortMovies(cinemas);
   }
 
   render() {
@@ -61,7 +53,6 @@ class MoviePage extends Component {
     if (message) return (<p>{message}</p>);
 
     if (isFetching || !movies) return (<Loading />);
-
 
     const { match } = this.props;
     const { id } = match.params;
@@ -85,6 +76,8 @@ class MoviePage extends Component {
     let trailerPlaylist = "";
     results.forEach(result => trailerPlaylist += "," + result.key);
 
+    /* Notað til að bæta kommu milli leikstjóra ef þeir eru
+       'og' síðan sett fyrir seinasta leikstjóran */
     let directors = `Leikstjóri: ${directors_abridged[0].name}`;
     if (directors_abridged.length > 1) {
       directors = 'Leikstjórar: ' + directors_abridged[0].name;
@@ -117,7 +110,16 @@ class MoviePage extends Component {
         {results.length > 0 &&
           <div className="youtubevideowrap">
             <div className="video-container">
-              <iframe title="trailers" width="640" height="352" align="center" src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+              <iframe
+                title="trailers"
+                width="640"
+                height="352"
+                align="center"
+                src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`}
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen>
+              </iframe>
             </div>
           </div>
         }
@@ -132,7 +134,7 @@ class MoviePage extends Component {
                   <div className="schedules">
                     {schedule.map((schedule, index) => {
                       return (
-                        <a key={`${id}${index}`}href={schedule.purchase_url}>
+                        <a key={`${id}${index}`} href={schedule.purchase_url}>
                           <Button className="schedule">
                             <p>{schedule.time}</p>
                           </Button>

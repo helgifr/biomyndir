@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Header from './components/header';
 
@@ -27,8 +26,8 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </div>
-        <hr />
         <footer className="footer">
+          <hr />
           <p>&copy; {new Date().getFullYear()} - Bíómyndir landsins</p>
         </footer>
       </main>
@@ -36,10 +35,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    movies: state.movies.movies,
-    isFetching: state.movies.isFetching,
-  }
-}
-export default withRouter(connect(mapStateToProps)(App));
+export default App;

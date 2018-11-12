@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import rootReducer from './reducers';
+import ScrollToTop from './ScrollToTop';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(
@@ -17,8 +18,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
+    {/* basename notað vegna github pages */}
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <App />
+      <ScrollToTop>
+        <App />
+      </ScrollToTop>
     </BrowserRouter>
   </Provider>, document.getElementById('root'));
 

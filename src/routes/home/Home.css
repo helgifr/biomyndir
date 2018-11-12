@@ -9,6 +9,12 @@
   margin: 40px auto;
 }
 
+@media (max-width: 999px) {
+  .cinemas {
+    margin: 40px;
+  }
+}
+
 .cinemas > h3 {
   width: 100%;
   text-align: center;

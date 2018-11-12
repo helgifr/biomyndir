@@ -17,7 +17,7 @@
   height: 100%;
 }
 
-.movieSpace p {
+.movieSpace > * {
   color: black;
 }
 

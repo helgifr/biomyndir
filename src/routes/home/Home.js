@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
+// Myndir sóttar gegnum bakenda með redux
 import { getMovies } from '../../actions/movies';
 
 import Button from '../../components/button';
@@ -15,8 +16,8 @@ import './Home.css';
 class Home extends Component {
 
   state = {
-    allMovies: [],
-    movies: [],
+    allMovies: null,
+    movies: null,
     done: false,
     cinemas: [
       { name: "Álfabakki", pushed: false },
@@ -36,16 +37,16 @@ class Home extends Component {
 
   async componentDidMount() {
     const { dispatch } = this.props;
-    const cinemas = JSON.parse(window.localStorage.getItem('cinemas'));
-    if (cinemas) {
-      this.setState({ cinemas, sortMovies: true });
-    }
     const movies = await getStoredMovies();
     if (movies) {
       this.setState({ allMovies: movies, movies, done: true });
     }
     else {
       await dispatch(getMovies());
+    }
+    const cinemas = JSON.parse(window.localStorage.getItem('cinemas'));
+    if (cinemas) {
+      this.setState({ cinemas, sortMovies: true });
     }
   }
 
@@ -54,7 +55,7 @@ class Home extends Component {
     const { done, sortMovies, cinemas } = this.state;
 
     if (!isFetching && !done) {
-      if (movies) {
+      if (movies) { // Myndir sóttar gegnum bakenda
         this.setState({ allMovies: movies, movies, done: true });
       } else if (message) {
         console.warn(message);
@@ -81,8 +82,9 @@ class Home extends Component {
         if (!cinema.pushed) {
           const { showtimes } = movie;
           const filtered = showtimes.filter(showtime => showtime.cinema.name === cinema.name);
-          if (filtered.length > 0) {
+          if (filtered.length > 0) { // Mynd er sýnd í a.m.k. einu bíóhúsi
             showMovie = true;
+            return;
           }
         }
       });
@@ -90,6 +92,7 @@ class Home extends Component {
         newMovieList.push(movie);
       }
     });
+    // Geyma völdu kvikmyndahús
     window.localStorage.setItem('cinemas', JSON.stringify(cinemas));
 
     this.setState({ movies: newMovieList, cinemas, sortMovies: false });
@@ -109,12 +112,18 @@ class Home extends Component {
           <h3>Bíóhús</h3>
           {cinemas.map((cinema, index) => {
             return(
-              <Button key={index} pushed={cinema.pushed} onClick={() => this.cinemaButton(index)}>{cinema.name}</Button>
+              <Button
+                key={index}
+                pushed={cinema.pushed}
+                onClick={() => this.cinemaButton(index)}
+              >
+              {cinema.name}
+              </Button>
             );
           })}
         </div>
         <div className="movies">
-          {movies && 
+          {movies &&
             movies.map((movie) => {
               return (
                 <Movie

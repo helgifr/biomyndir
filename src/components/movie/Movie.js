@@ -15,7 +15,7 @@ export default class Movie extends Component {
       <figure className="movieSpace">
         <Link to={ "/movie/" + id} style={{ textDecoration: 'none' }}>
           <img src={poster} alt={"Mynd fyrir bíómyndina " + title}/>
-          <p>{title}</p>
+          <figcaption>{title}</figcaption>
           <div className="rating">
             <p>{ratings.imdb}</p>
             <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />

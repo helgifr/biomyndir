@@ -1,3 +1,4 @@
+// Föll til að geyma og sækja myndir frá localstorage
 export async function getStoredMovies() {
   const storedMovies = JSON.parse(window.localStorage.getItem('movies'));
   
@@ -16,7 +17,6 @@ export async function setStoredMovies(movies) {
     movies,
     timestamp: new Date(),
   }
-  console.log(data);
-  
+
   window.localStorage.setItem('movies', JSON.stringify(data));
 }

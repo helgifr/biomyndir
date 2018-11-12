@@ -48,26 +48,3 @@ export const getMovies = () => {
     }
   }
 }
-
-export const getMovie = (id) => {
-  return async (dispatch) => {
-    dispatch(requestMovies());
-
-    let response;
-
-    try {
-      response = await api.getMovie(id);
-    } catch (e) {
-      console.log('nbei');
-      
-      return dispatch(moviesError(e));
-    }
-
-    if (response.status === 401) {
-      dispatch(moviesError(response.result));
-    } else {
-      const { result } = response;
-      dispatch(receiveMovies(result));
-    }
-  }
-}
