@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { Route, Switch } from 'react-router-dom'
+import CookieConsent from 'react-cookie-consent';
 
 import Header from './components/header';
 
@@ -30,6 +31,9 @@ class App extends Component {
           <hr />
           <p>&copy; {new Date().getFullYear()} - Bíómyndir landsins</p>
         </footer>
+        <CookieConsent buttonText="Allt í góðu">
+          Þessi síða notar kökur til að bæta notendaupplifunina.
+        </CookieConsent>
       </main>
     );
   }
