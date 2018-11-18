@@ -44,3 +44,11 @@
   max-height: 75px;
   margin: auto auto auto 0;
 }
+
+.title {
+  font-size: 1.1em;
+}
+
+.release-date {
+  font-weight: bold;
+}

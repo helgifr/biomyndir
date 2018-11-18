@@ -13,6 +13,9 @@ export default class Header extends Component {
         <Link to="/" style={{ textDecoration: 'none' }}>
           <p className="home-button">Heim</p>
         </Link>
+        <Link to="/upcoming" style={{ textDecoration: 'none' }}>
+          <p className="upcoming-button">Væntanlegt</p>
+        </Link>
       </nav>
     );
   }

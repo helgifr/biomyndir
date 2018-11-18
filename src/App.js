@@ -8,6 +8,7 @@ import Header from './components/header';
 import NotFound from './routes/not-found';
 import Home from './routes/home';
 import MoviePage from './routes/moviePage';
+import UpcomingMovies from './routes/upcomingMovies';
 
 import './App.css';
 
@@ -23,6 +24,7 @@ class App extends Component {
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
             <Route path="/movie/:id" component={MoviePage} />
+            <Route path="/upcoming" component={UpcomingMovies} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>

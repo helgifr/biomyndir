@@ -1,16 +1,18 @@
 .nav-bar {
-  max-height: 50px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
   padding: 25px 50px;
   flex-wrap: wrap;
   background: burlywood;
+  font-size: 2em;
 }
 
 .home-button {
-  font-size: 24px;
+  margin: 0 2em 0 0;
+  color: #000;
+}
+
+.upcoming-button {
   margin: 0;
   color: #000;
 }
