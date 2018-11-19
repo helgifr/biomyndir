@@ -58,7 +58,7 @@ class Home extends Component {
       if (movies) { // Myndir sóttar gegnum bakenda
         this.setState({ allMovies: movies, movies, done: true });
       } else if (message) {
-        console.warn(message);
+        console.error(message);
       }
     } else if (isFetching) {
       console.info('Fetching movies');

@@ -10,7 +10,7 @@ import { getStoredMovies, getStoredUpcomingMovies } from '../../storedMovies';
 import Button from '../../components/button';
 import Loading from '../../components/loading';
 
-import { months } from '../../utils';
+import { months, listDirectors } from '../../utils';
 
 import './MoviePage.css';
 
@@ -49,78 +49,11 @@ class MoviePage extends Component {
       if (movies && upcomingMovies) {
         this.setState({ movies, upcomingMovies, doneMovies: true, doneUpcoming: true });
       } else {
-        console.warn(message);
+        console.error(message);
       }
     } else if (isFetching) {
       console.info('Fetching movies');
     }
-  }
-
-  renderUpcomingMovie(movie) {
-    const {
-      title,
-      plot,
-      directors_abridged,
-      trailers,
-    } = movie;
-
-    const { results } = trailers[0];
-
-    let trailerPlaylist = "";
-    results.forEach(result => trailerPlaylist += "," + result.key);
-
-    const date = new Date(movie['release-dateIS']);
-    const dateString = `${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
-
-    let { poster } = movie;
-    if (poster === 'https://kvikmyndir.is/images/poster/') {
-      poster = `${basename}/noPoster.png`;
-    }
-
-    /* Notað til að bæta kommu milli leikstjóra ef þeir eru
-       fleiri en einn, 'og' síðan sett fyrir seinasta leikstjóran */
-    let directors = `Leikstjóri: ${directors_abridged[0].name}`;
-    if (directors_abridged.length > 1) {
-      directors = 'Leikstjórar: ' + directors_abridged[0].name;
-      for (let i = 1; i < directors_abridged.length; i++) {
-        if (i === directors_abridged.length-1) {
-          directors += ` og ${directors_abridged[i].name}`;
-        } else {
-          directors += `, ${directors_abridged[i].name}`;
-        }
-      }
-    }
-
-    return (
-      <div className="movie-page">
-        <Helmet title={title} />
-        <div className="movie-about">
-          <img src={poster} alt={"mynd fyrir bíómyndina " + title} />
-          <div className="movie-info">
-            <h2 className="movie-page_release-date">{dateString}</h2>
-            <h1 className="movie-title">{title}</h1>
-            <p>{directors}</p>
-            <p className="plot-text">{plot}</p>
-          </div>
-        </div>
-        {results.length > 0 &&
-          <div className="youtubevideowrap">
-            <div className="video-container">
-              <iframe
-                title="trailers"
-                width="640"
-                height="352"
-                align="center"
-                src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`}
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen>
-              </iframe>
-            </div>
-          </div>
-        }
-      </div>
-    );
   }
 
   render() {
@@ -136,10 +69,13 @@ class MoviePage extends Component {
 
     let movie = movies.filter(movie => movie.id === parseInt(id));
 
+    let isUpcoming = false;
     if (movie.length === 0) {
       movie = upcomingMovies.filter(movie => movie.id === parseInt(id));
-      return this.renderUpcomingMovie(movie[0]);
+      isUpcoming = true;
     }
+
+    if (movie.length === 0) return (<h2 className="movie-notfound">Mynd fannst ekki</h2>);
 
     const {
       title,
@@ -152,25 +88,57 @@ class MoviePage extends Component {
       trailers,
     } = movie[0];
 
-    const { imdb } = ratings;
-    const { results } = trailers[0];
+    let ratingSection, dateSection, showtimeSection = null;
+    if (isUpcoming) {
+      const date = new Date(movie[0]['release-dateIS']);
+      const dateString = `${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
+      dateSection = (
+        <h2 className="movie-page_release-date">{dateString}</h2>
+      );
+    } else {
+      const { imdb } = ratings;
+      ratingSection = (
+        <div className="movie-page-rating">
+          <p>{imdb}</p>
+          <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
+            <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />
+          </a>
+        </div>
+      );
+      showtimeSection = (
+        <div className="showtimes">
+        {movie &&
+          showtimes.map(theater => {
+            const { name, id } = theater.cinema;
+            const { schedule } = theater;
+            return (
+              <section key={id} className="theater-showtimes">
+                <h1>{name}</h1>
+                <div className="schedules">
+                  {schedule.map((schedule, index) => {
+                    return (
+                      <a key={`${id}${index}`} href={schedule.purchase_url}>
+                        <Button className="schedule">
+                          <p>{schedule.time}</p>
+                        </Button>
+                      </a>
+                    )
+                  })
+                  }
+                </div>
+              </section>
+            )
+          })
+        }
+        </div>
+      );
+    }
 
+    const { results } = trailers[0];
     let trailerPlaylist = "";
     results.forEach(result => trailerPlaylist += "," + result.key);
 
-    /* Notað til að bæta kommu milli leikstjóra ef þeir eru
-       fleiri en einn, 'og' síðan sett fyrir seinasta leikstjóran */
-    let directors = `Leikstjóri: ${directors_abridged[0].name}`;
-    if (directors_abridged.length > 1) {
-      directors = 'Leikstjórar: ' + directors_abridged[0].name;
-      for (let i = 1; i < directors_abridged.length; i++) {
-        if (i === directors_abridged.length-1) {
-          directors += ` og ${directors_abridged[i].name}`;
-        } else {
-          directors += `, ${directors_abridged[i].name}`;
-        }
-      }
-    }
+    const directors = listDirectors(directors_abridged);
 
     return (
       <div className="movie-page">
@@ -178,13 +146,9 @@ class MoviePage extends Component {
         <div className="movie-about">
           <img src={poster} alt={"mynd fyrir bíómyndina " + title} />
           <div className="movie-info">
+            {dateSection}
             <h1 className="movie-title">{title}</h1>
-            <div className="movie-page-rating">
-              <p>{imdb}</p>
-              <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
-                <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />
-              </a>
-            </div>
+            {ratingSection}
             <p>{directors}</p>
             <p className="plot-text">{plot}</p>
           </div>
@@ -205,31 +169,7 @@ class MoviePage extends Component {
             </div>
           </div>
         }
-        <div className="showtimes">
-          {movie &&
-            showtimes.map(theater => {
-              const { name, id } = theater.cinema;
-              const { schedule } = theater;
-              return (
-                <section key={id} className="theater-showtimes">
-                  <h1>{name}</h1>
-                  <div className="schedules">
-                    {schedule.map((schedule, index) => {
-                      return (
-                        <a key={`${id}${index}`} href={schedule.purchase_url}>
-                          <Button className="schedule">
-                            <p>{schedule.time}</p>
-                          </Button>
-                        </a>
-                      )
-                    })
-                    }
-                  </div>
-                </section>
-              )
-            })
-          }
-        </div>
+        {showtimeSection}
       </div>
     );
   }

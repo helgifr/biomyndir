@@ -85,3 +85,7 @@ iframe {
     margin: auto;
   }
 }
+
+.movie-notfound {
+  text-align: center;
+}

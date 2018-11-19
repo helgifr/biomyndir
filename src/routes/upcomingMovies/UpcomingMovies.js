@@ -40,7 +40,7 @@ class UpcomingMovies extends Component {
         const sortedMovies = this.sortMovies(movies);
         this.setState({ movies: sortedMovies, done: true });
       } else if (message) {
-        console.warn(message);
+        console.error(message);
       }
     } else if (isFetching) {
       console.info('Fetching movies');
@@ -74,7 +74,6 @@ class UpcomingMovies extends Component {
               <Movie
                 key={movie.id}
                 movie={movie}
-                upcoming={true}
               />
             )
           })
