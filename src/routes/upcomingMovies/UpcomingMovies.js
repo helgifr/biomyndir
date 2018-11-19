@@ -74,6 +74,7 @@ class UpcomingMovies extends Component {
               <Movie
                 key={movie.id}
                 movie={movie}
+                upcoming={true}
               />
             )
           })
