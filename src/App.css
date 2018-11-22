@@ -31,6 +31,10 @@
   }
 }
 
+.main__content {
+  margin: 20px;
+}
+
 .footer {
   text-align: center;
 }

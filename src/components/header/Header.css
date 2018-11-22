@@ -4,15 +4,19 @@
   padding: 25px 50px;
   flex-wrap: wrap;
   background: burlywood;
-  font-size: 2em;
+  font-size: 1.8em;
 }
 
 .home-button {
-  margin: 0 2em 0 0;
-  color: #000;
+  width: 43px;
+  height: 45px;
+  margin: auto 30px auto 0;
+}
+
+.home-button > img {
+  max-width: 100%;
 }
 
 .upcoming-button {
-  margin: 0;
   color: #000;
 }

@@ -7,8 +7,8 @@ import { getMovies } from '../../actions/movies';
 import { getUpcomingMovies } from '../../actions/upcomingMovies';
 import { getStoredMovies, getStoredUpcomingMovies } from '../../storedMovies';
 
-import Button from '../../components/button';
 import Loading from '../../components/loading';
+import Showtimes from '../../components/showtimes';
 
 import { months, listDirectors } from '../../utils';
 
@@ -46,9 +46,7 @@ class MoviePage extends Component {
     const { doneMovies, doneUpcoming } = this.state;
 
     if (!isFetching || !isFetchingUpcoming) {
-      if (movies && upcomingMovies && !doneMovies && !doneUpcoming) {
-        this.setState({ movies, upcomingMovies, doneMovies: true, doneUpcoming: true });
-      } else if (movies && !doneMovies) {
+      if (movies && !doneMovies) {
         this.setState({ movies, doneMovies: true });
       } else if (upcomingMovies && !doneUpcoming) {
         this.setState({ upcomingMovies, doneUpcoming: true });
@@ -71,10 +69,10 @@ class MoviePage extends Component {
     const { match } = this.props;
     const { id } = match.params;
 
+    // Finna mynd og vita hvort hún sé væntanleg eða ekki
     let movie = movies.filter(movie => movie.id === parseInt(id));
 
     let isUpcoming = false;
-
     if (movie.length === 0) {
       movie = upcomingMovies.filter(movie => movie.id === parseInt(id));
       isUpcoming = true;
@@ -93,14 +91,14 @@ class MoviePage extends Component {
       trailers,
     } = movie[0];
 
-    let ratingSection, dateSection, showtimeSection = null;
-    if (isUpcoming) {
+    let ratingSection, dateSection;
+    if (isUpcoming) { // Ef að mynd er væntanleg þá er birt útgáfudagur
       const date = new Date(movie[0]['release-dateIS']);
       const dateString = `${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
       dateSection = (
         <h2 className="movie-page_release-date">{dateString}</h2>
       );
-    } else {
+    } else { // Annars er birt imdb einkunnin
       const { imdb } = ratings;
       ratingSection = (
         <div className="movie-page-rating">
@@ -108,33 +106,6 @@ class MoviePage extends Component {
           <a href={"https://www.imdb.com/title/tt" + ids.imdb}>
             <img className="logo" src={`${basename}/imdb.png`} alt="imdb logo" />
           </a>
-        </div>
-      );
-      showtimeSection = (
-        <div className="showtimes">
-        {movie &&
-          showtimes.map(theater => {
-            const { name, id } = theater.cinema;
-            const { schedule } = theater;
-            return (
-              <section key={id} className="theater-showtimes">
-                <h1>{name}</h1>
-                <div className="schedules">
-                  {schedule.map((schedule, index) => {
-                    return (
-                      <a key={`${id}${index}`} href={schedule.purchase_url}>
-                        <Button className="schedule">
-                          <p>{schedule.time}</p>
-                        </Button>
-                      </a>
-                    )
-                  })
-                  }
-                </div>
-              </section>
-            )
-          })
-        }
         </div>
       );
     }
@@ -174,7 +145,7 @@ class MoviePage extends Component {
             </div>
           </div>
         }
-        {showtimeSection}
+        <Showtimes showtimes={showtimes} />
       </div>
     );
   }

@@ -13,7 +13,6 @@
 .movie-about > img {
   max-width: 300px;
   height: 450px;
-  margin-left: 20px;
 }
 
 .movie-info {
@@ -28,24 +27,10 @@
   margin: auto 0;
 }
 
-.showtimes {
-  margin: 20px auto;
-}
-
-.theater-showtimes {
-  margin: auto 20px;
-}
-
-.schedules {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .youtubevideowrap {
   width: 94%;
   max-width: 640px;
-  margin: auto 20px;
+  background: #d1cccc
 }
 
 .video-container {

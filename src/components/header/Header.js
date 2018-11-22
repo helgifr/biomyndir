@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 import './Header.css';
 
-/* todo aðrar útgáfur af takka fyrir disabled, minni takka fyrir logout og "warning" takka */
+const basename = process.env.PUBLIC_URL || '';
 
 export default class Header extends Component {
 
   render() {
     return (
       <nav className="nav-bar">
-        <Link to="/" style={{ textDecoration: 'none' }}>
-          <p className="home-button">Heim</p>
+        <Link className="home-button" to="/" style={{ textDecoration: 'none' }}>
+          <img src={`${basename}/Home.png`} alt="Home Icon" />
         </Link>
         <Link to="/upcoming" style={{ textDecoration: 'none' }}>
           <p className="upcoming-button">Væntanlegt</p>

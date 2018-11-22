@@ -35,3 +35,11 @@
   cursor: pointer;
   margin: 5px;
 }
+
+.schedule {
+  background-color: #29a525;
+}
+
+.schedule:hover {
+  background-color: #247c21;
+}
