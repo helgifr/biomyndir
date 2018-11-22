@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/biomyndir/static/js/runtime~main.c907fc2b.js"
   },
   {
-    "revision": "123f38e6a5cf2f66b810",
-    "url": "/biomyndir/static/js/main.123f38e6.chunk.js"
+    "revision": "6d6307d4f6d06c84d4f9",
+    "url": "/biomyndir/static/js/main.6d6307d4.chunk.js"
   },
   {
     "revision": "018b5a3182c2da0ecaa9",
     "url": "/biomyndir/static/js/1.018b5a31.chunk.js"
   },
   {
-    "revision": "123f38e6a5cf2f66b810",
+    "revision": "6d6307d4f6d06c84d4f9",
     "url": "/biomyndir/static/css/main.c95b0758.chunk.css"
   },
   {
-    "revision": "e6d074f514beba372f5cfd7f6b8f9f49",
+    "revision": "130b873b8e62befe7bbbcba1625dd1fb",
     "url": "/biomyndir/index.html"
   }
 ];
