@@ -42,27 +42,31 @@ class MoviePage extends Component {
   }
 
   componentDidUpdate() {
-    const { isFetching, movies, upcomingMovies, message } = this.props;
+    const { isFetching, isFetchingUpcoming, movies, upcomingMovies, message } = this.props;
     const { doneMovies, doneUpcoming } = this.state;
 
-    if (!isFetching && !doneMovies && !doneUpcoming) {
-      if (movies && upcomingMovies) {
+    if (!isFetching || !isFetchingUpcoming) {
+      if (movies && upcomingMovies && !doneMovies && !doneUpcoming) {
         this.setState({ movies, upcomingMovies, doneMovies: true, doneUpcoming: true });
-      } else {
+      } else if (movies && !doneMovies) {
+        this.setState({ movies, doneMovies: true });
+      } else if (upcomingMovies && !doneUpcoming) {
+        this.setState({ upcomingMovies, doneUpcoming: true });
+      } else if (message) {
         console.error(message);
       }
-    } else if (isFetching) {
+    } else {
       console.info('Fetching movies');
     }
   }
 
   render() {
-    const { message, isFetching } = this.props;
+    const { message, isFetching, isFetchingUpcoming } = this.props;
     const { movies, upcomingMovies } = this.state;
 
     if (message) return (<p>{message}</p>);
 
-    if (isFetching || !movies || !upcomingMovies) return (<Loading />);
+    if (isFetching || isFetchingUpcoming || !movies || !upcomingMovies) return (<Loading />);
 
     const { match } = this.props;
     const { id } = match.params;
@@ -70,6 +74,7 @@ class MoviePage extends Component {
     let movie = movies.filter(movie => movie.id === parseInt(id));
 
     let isUpcoming = false;
+
     if (movie.length === 0) {
       movie = upcomingMovies.filter(movie => movie.id === parseInt(id));
       isUpcoming = true;
@@ -177,10 +182,11 @@ class MoviePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    upcomingMovies: state.upcomingMovies.movies,
-    isFetchingUpcoming: state.upcomingMovies.isFetching,
+    upcomingMovies: state.upcomingMovies.upcomingMovies,
+    isFetchingUpcoming: state.upcomingMovies.isFetchingUpcoming,
     movies: state.movies.movies,
     isFetching: state.movies.isFetching,
+    message: state.movies.message,
   }
 }
 export default withRouter(connect(mapStateToProps)(MoviePage));

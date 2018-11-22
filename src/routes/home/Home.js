@@ -50,7 +50,7 @@ class Home extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     const { isFetching, movies, message } = this.props;
     const { done, sortMovies, cinemas } = this.state;
 
@@ -143,6 +143,7 @@ const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
     isFetching: state.movies.isFetching,
+    message: state.movies.message,
   }
 }
 export default withRouter(connect(mapStateToProps)(Home));

@@ -31,7 +31,7 @@ class UpcomingMovies extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     const { isFetching, movies, message } = this.props;
     const { done } = this.state;
 
@@ -86,8 +86,8 @@ class UpcomingMovies extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    movies: state.upcomingMovies.movies,
-    isFetching: state.upcomingMovies.isFetching,
+    movies: state.upcomingMovies.upcomingMovies,
+    isFetching: state.upcomingMovies.isFetchingUpcoming,
   }
 }
 export default withRouter(connect(mapStateToProps)(UpcomingMovies));

@@ -1,7 +1,7 @@
 import {
-  MOVIES_REQUEST,
-  MOVIES_ERROR,
-  MOVIES_SUCCESS,
+  UPCOMING_MOVIES_REQUEST,
+  UPCOMING_MOVIES_ERROR,
+  UPCOMING_MOVIES_SUCCESS,
 } from '../actions/upcomingMovies';
 
 const initialState = {
@@ -12,26 +12,26 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case MOVIES_REQUEST:
+    case UPCOMING_MOVIES_REQUEST:
       return {
         ...state,
-        isFetching: action.isFetching,
-        movies: action.movies,
+        isFetchingUpcoming: action.isFetchingUpcoming,
+        upcomingMovies: action.upcomingMovies,
       };
 
-    case MOVIES_ERROR:
+    case UPCOMING_MOVIES_ERROR:
       return {
         ...state,
-        isFetching: action.isFetching,
-        movies: action.movies,
-        message: action.message
+        isFetchingUpcoming: action.isFetchingUpcoming,
+        upcomingMovies: action.upcomingMovies,
+        message: action.message,
       };
 
-    case MOVIES_SUCCESS:
+    case UPCOMING_MOVIES_SUCCESS:
       return {
         ...state,
-        isFetching: action.isFetching,
-        movies: action.movies,
+        isFetchingUpcoming: action.isFetchingUpcoming,
+        upcomingMovies: action.upcomingMovies,
       };
 
     default:

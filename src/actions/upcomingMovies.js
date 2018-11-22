@@ -1,31 +1,31 @@
 import api from '../api';
 
-export const MOVIES_REQUEST = 'MOVIES_REQUEST';
-export const MOVIES_ERROR = 'MOVIES_ERROR';
-export const MOVIES_SUCCESS = 'MOVIES_SUCCESS';
+export const UPCOMING_MOVIES_REQUEST = 'UPCOMING_MOVIES_REQUEST';
+export const UPCOMING_MOVIES_ERROR = 'UPCOMING_MOVIES_ERROR';
+export const UPCOMING_MOVIES_SUCCESS = 'UPCOMING_MOVIES_SUCCESS';
 
 function requestMovies() {
   return {
-    type: MOVIES_REQUEST,
-    isFetching: true,
-    movies: null,
+    type: UPCOMING_MOVIES_REQUEST,
+    isFetchingUpcoming: true,
+    upcomingMovies: null,
   }
 }
 
 function moviesError(message) {
   return {
-    type: MOVIES_ERROR,
-    isFetching: false,
-    movies: null,
+    type: UPCOMING_MOVIES_ERROR,
+    isFetchingUpcoming: false,
+    upcomingMovies: null,
     message,
   }
 }
 
-function receiveMovies(movies) {
+function receiveMovies(upcomingMovies) {
   return {
-    type: MOVIES_SUCCESS,
-    isFetching: false,
-    movies,
+    type: UPCOMING_MOVIES_SUCCESS,
+    isFetchingUpcoming: false,
+    upcomingMovies,
   }
 }
 

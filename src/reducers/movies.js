@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         movies: action.movies,
-        message: action.message
+        message: action.message,
       };
 
     case MOVIES_SUCCESS:
