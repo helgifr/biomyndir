@@ -9,7 +9,7 @@ import Button from '../../components/button';
 import Movie from '../../components/movie';
 import Loading from '../../components/loading';
 
-import { getStoredMovies } from '../../storedMovies';
+import { getStored } from '../../storedMovies';
 
 import './Home.css';
 
@@ -37,7 +37,7 @@ class Home extends Component {
 
   async componentDidMount() {
     const { dispatch } = this.props;
-    const movies = await getStoredMovies();
+    const movies = await getStored('movies');
     if (movies) {
       this.setState({ allMovies: movies, movies, done: true });
     }
@@ -73,19 +73,26 @@ class Home extends Component {
     this.sortMovies(cinemas);
   }
 
+  invalidateCinemas() {
+    const { cinemas } = this.state;
+    cinemas.forEach((cinema) => cinema.pushed = true);
+    this.sortMovies(cinemas);
+  }
+
   sortMovies(cinemas) {
     const { allMovies } = this.state;
     const newMovieList = [];
+    // Nota bíóhúsin sem eru valin
+    const activeCinemas = cinemas.filter(cinema => !cinema.pushed);
+
     allMovies.forEach(movie => {
       let showMovie = false;
-      cinemas.forEach(cinema => {
-        if (!cinema.pushed) {
-          const { showtimes } = movie;
-          const filtered = showtimes.filter(showtime => showtime.cinema.name === cinema.name);
-          if (filtered.length > 0) { // Mynd er sýnd í a.m.k. einu bíóhúsi
-            showMovie = true;
-            return;
-          }
+      activeCinemas.forEach(cinema => {
+        const { showtimes } = movie;
+        const showing = showtimes.some(showtime => showtime.cinema.name === cinema.name);
+        if (showing) { // Mynd er sýnd í a.m.k. einu bíóhúsi
+          showMovie = true;
+          return;
         }
       });
       if (showMovie) {
@@ -110,17 +117,20 @@ class Home extends Component {
       <div>
         <div className="cinemas">
           <h3>Bíóhús</h3>
-          {cinemas.map((cinema, index) => {
-            return(
-              <Button
-                key={index}
-                pushed={cinema.pushed}
-                onClick={() => this.cinemaButton(index)}
-              >
-              {cinema.name}
-              </Button>
-            );
-          })}
+          <div className="cinema-buttons">
+            {cinemas.map((cinema, index) => {
+              return(
+                <Button
+                  key={index}
+                  pushed={cinema.pushed}
+                  onClick={() => this.cinemaButton(index)}
+                >
+                {cinema.name}
+                </Button>
+              );
+            })}
+          </div>
+          <Button type="cancel" onClick={() => this.invalidateCinemas()}>Afvelja allt</Button>
         </div>
         <div className="movies">
           {movies &&

@@ -8,7 +8,7 @@ import { getUpcomingMovies } from '../../actions/upcomingMovies';
 import Movie from '../../components/movie';
 import Loading from '../../components/loading';
 
-import { getStoredUpcomingMovies } from '../../storedMovies';
+import { getStored } from '../../storedMovies';
 
 import './UpcomingMovies.css';
 
@@ -21,7 +21,7 @@ class UpcomingMovies extends Component {
 
   async componentDidMount() {
     const { dispatch } = this.props;
-    const movies = await getStoredUpcomingMovies();
+    const movies = await getStored('upcomingMovies');
     if (movies) {
       const sortedMovies = this.sortMovies(movies);
       this.setState({ movies: sortedMovies, done: true });

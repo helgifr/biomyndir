@@ -1,7 +1,7 @@
 .nav-bar {
   display: flex;
   flex-direction: row;
-  padding: 25px 50px;
+  padding: 10px 50px;
   flex-wrap: wrap;
   background: burlywood;
   font-size: 1.8em;

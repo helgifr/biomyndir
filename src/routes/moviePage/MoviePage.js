@@ -5,10 +5,11 @@ import Helmet from 'react-helmet';
 
 import { getMovies } from '../../actions/movies';
 import { getUpcomingMovies } from '../../actions/upcomingMovies';
-import { getStoredMovies, getStoredUpcomingMovies } from '../../storedMovies';
+import { getStored } from '../../storedMovies';
 
 import Loading from '../../components/loading';
 import Showtimes from '../../components/showtimes';
+import YTPlaylist from '../../components/YTPlaylist';
 
 import { months, listDirectors } from '../../utils';
 
@@ -27,8 +28,8 @@ class MoviePage extends Component {
 
   async componentDidMount() {
     const { dispatch } = this.props;
-    const movies = await getStoredMovies();
-    const upcomingMovies = await getStoredUpcomingMovies();
+    const movies = await getStored('movies');
+    const upcomingMovies = await getStored('upcomingMovies');
     if (movies) {
       this.setState({ movies, doneMovies: true });
     } else {
@@ -70,15 +71,15 @@ class MoviePage extends Component {
     const { id } = match.params;
 
     // Finna mynd og vita hvort hún sé væntanleg eða ekki
-    let movie = movies.filter(movie => movie.id === parseInt(id));
+    let movie = movies.find(movie => movie.id === parseInt(id));
 
     let isUpcoming = false;
-    if (movie.length === 0) {
-      movie = upcomingMovies.filter(movie => movie.id === parseInt(id));
+    if (!movie) {
+      movie = upcomingMovies.find(movie => movie.id === parseInt(id));
       isUpcoming = true;
     }
 
-    if (movie.length === 0) return (<h2 className="movie-notfound">Mynd fannst ekki</h2>);
+    if (!movie) return (<h2 className="movie-notfound">Mynd fannst ekki</h2>);
 
     const {
       title,
@@ -89,11 +90,11 @@ class MoviePage extends Component {
       showtimes,
       directors_abridged,
       trailers,
-    } = movie[0];
+    } = movie;
 
     let ratingSection, dateSection;
     if (isUpcoming) { // Ef að mynd er væntanleg þá er birt útgáfudagur
-      const date = new Date(movie[0]['release-dateIS']);
+      const date = new Date(movie['release-dateIS']);
       const dateString = `${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
       dateSection = (
         <h2 className="movie-page_release-date">{dateString}</h2>
@@ -110,17 +111,13 @@ class MoviePage extends Component {
       );
     }
 
-    const { results } = trailers[0];
-    let trailerPlaylist = "";
-    results.forEach(result => trailerPlaylist += "," + result.key);
-
     const directors = listDirectors(directors_abridged);
 
     return (
       <div className="movie-page">
         <Helmet title={title} />
         <div className="movie-about">
-          <img src={poster} alt={"mynd fyrir bíómyndina " + title} />
+          <img src={poster} alt={`mynd fyrir bíómyndina ${title}`} />
           <div className="movie-info">
             {dateSection}
             <h1 className="movie-title">{title}</h1>
@@ -129,22 +126,7 @@ class MoviePage extends Component {
             <p className="plot-text">{plot}</p>
           </div>
         </div>
-        {results.length > 0 &&
-          <div className="youtubevideowrap">
-            <div className="video-container">
-              <iframe
-                title="trailers"
-                width="640"
-                height="352"
-                align="center"
-                src={`https://www.youtube.com/embed/?playlist=${trailerPlaylist}`}
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen>
-              </iframe>
-            </div>
-          </div>
-        }
+        <YTPlaylist trailers={trailers[0]} />
         <Showtimes showtimes={showtimes} />
       </div>
     );

@@ -43,3 +43,13 @@
 .schedule:hover {
   background-color: #247c21;
 }
+
+.cancel {
+  background-color: rgb(250, 0, 0);
+  margin: auto;
+  margin-top: 10px;
+}
+
+.cancel:hover {
+  background-color: #e40505;
+}

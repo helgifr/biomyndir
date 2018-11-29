@@ -1,4 +1,4 @@
-import { setStoredMovies, setStoredUpcomingMovies } from './storedMovies';
+import { setStored } from './storedMovies';
 
 const baseurl = process.env.REACT_APP_SERVICE_URL || "https://bio-server.herokuapp.com";
 
@@ -17,7 +17,7 @@ async function getMovies() {
   const result = await response.json();
 
   if (response.status === 200) {
-    setStoredMovies(result);
+    setStored('movies', result);
   }
 
   return { result, status: response.status };
@@ -31,7 +31,7 @@ async function getUpcomingMovies() {
   const result = await response.json();
 
   if (response.status === 200) {
-    setStoredUpcomingMovies(result);
+    setStored('upcomingMovies', result);
   }
 
   return { result, status: response.status };
