@@ -73,7 +73,7 @@ class Home extends Component {
     this.sortMovies(cinemas);
   }
 
-  invalidateCinemas() {
+  clearCinemas() {
     const { cinemas } = this.state;
     cinemas.forEach((cinema) => cinema.pushed = true);
     this.sortMovies(cinemas);
@@ -130,7 +130,7 @@ class Home extends Component {
               );
             })}
           </div>
-          <Button type="cancel" onClick={() => this.invalidateCinemas()}>Afvelja allt</Button>
+          <Button type="cancel" onClick={() => this.clearCinemas()}>Afvelja allt</Button>
         </div>
         <div className="movies">
           {movies &&
