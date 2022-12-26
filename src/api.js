@@ -1,6 +1,6 @@
 import { setStored } from './storedMovies';
 
-const baseurl = process.env.REACT_APP_SERVICE_URL || "https://bio-server.herokuapp.com";
+const baseurl = process.env.REACT_APP_SERVICE_URL || "https://bio-server-production.up.railway.app";
 
 const options = {
   headers: {
