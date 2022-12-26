@@ -1,13 +1,13 @@
 {
-  "main.css": "/biomyndir/static/css/main.d8b03538.chunk.css",
-  "main.js": "/biomyndir/static/js/main.290ae75c.chunk.js",
-  "main.js.map": "/biomyndir/static/js/main.290ae75c.chunk.js.map",
-  "static/js/1.8f7f2633.chunk.js": "/biomyndir/static/js/1.8f7f2633.chunk.js",
-  "static/js/1.8f7f2633.chunk.js.map": "/biomyndir/static/js/1.8f7f2633.chunk.js.map",
+  "main.css": "/biomyndir/static/css/main.470e9b5e.chunk.css",
+  "main.js": "/biomyndir/static/js/main.f2d1b535.chunk.js",
+  "main.js.map": "/biomyndir/static/js/main.f2d1b535.chunk.js.map",
+  "static/js/1.6d6024ff.chunk.js": "/biomyndir/static/js/1.6d6024ff.chunk.js",
+  "static/js/1.6d6024ff.chunk.js.map": "/biomyndir/static/js/1.6d6024ff.chunk.js.map",
   "runtime~main.js": "/biomyndir/static/js/runtime~main.c907fc2b.js",
   "runtime~main.js.map": "/biomyndir/static/js/runtime~main.c907fc2b.js.map",
-  "static/css/main.d8b03538.chunk.css.map": "/biomyndir/static/css/main.d8b03538.chunk.css.map",
+  "static/css/main.470e9b5e.chunk.css.map": "/biomyndir/static/css/main.470e9b5e.chunk.css.map",
   "index.html": "/biomyndir/index.html",
-  "precache-manifest.384dbb142749bc4759f8a917cdf9bbc8.js": "/biomyndir/precache-manifest.384dbb142749bc4759f8a917cdf9bbc8.js",
+  "precache-manifest.b7611f6fcb25826cd735868cd8e77252.js": "/biomyndir/precache-manifest.b7611f6fcb25826cd735868cd8e77252.js",
   "service-worker.js": "/biomyndir/service-worker.js"
 }
